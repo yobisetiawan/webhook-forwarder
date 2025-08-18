@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.default')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('title', 'Dashboard')
 
-    <title>Dashboard</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-    <!-- Styles / Scripts -->
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
-</head>
-
-<body>
+@section('content')
     <div class="container mx-auto mt-5">
         <h1 class="text-2xl font-bold mb-4 pt-6">Dashboard</h1>
         <div class="flex justify-between w-full">
@@ -67,6 +52,4 @@
         </div>
 
     </div>
-</body>
-
-</html>
+@endsection
