@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     image: yobistudio/ablegroup-webhook-logger-app:latest
-    container_name: geoapi-app
+    container_name: webhook-logger-app-prod
     restart: unless-stopped
     env_file:
       - .env
@@ -31,7 +31,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.geoapi.rule=Host(`ablegroup.geoapi.hiyob.com`)"
+      - "traefik.http.routers.geoapi.rule=Host(`bayarind-dev.ablegroup.id`)"
       - "traefik.http.routers.geoapi.entrypoints=websecure"
       - "traefik.http.routers.geoapi.tls.certresolver=le"
       - "traefik.http.services.geoapi.loadbalancer.server.port=80"
@@ -40,7 +40,7 @@ services:
 
   traefik:
     image: traefik:v2.11
-    container_name: geoapi-traefik
+    container_name: webhook-logger-traefik
     restart: unless-stopped
     command:
       - "--api.insecure=true"
