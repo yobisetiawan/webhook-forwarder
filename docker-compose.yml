@@ -1,0 +1,42 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #image: geoapi-app:dev
+    container_name: webhook-logger-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./storage:/var/www/storage
+      - ./bootstrap/cache:/var/www/bootstrap/cache
+    entrypoint: /var/www/docker/entrypoint.sh
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=sqlite
+      - COMPOSER_CACHE_DIR=/tmp/composer_cache
+    networks:
+      - webhook-logger
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: webhook-logger-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - webhook-logger
+
+networks:
+  webhook-logger:
+    driver: bridge

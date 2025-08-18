@@ -1,0 +1,12 @@
+
+services:
+  app:
+    environment:
+      - APP_ENV=development
+      - APP_DEBUG=1
+    volumes:
+      - ./:/var/www
+      - ./storage:/var/www/storage
+      - ./docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
