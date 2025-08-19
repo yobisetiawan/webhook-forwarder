@@ -10,7 +10,9 @@ class ApiController extends Controller
     public function webhook(Request $request)
     {
 
-        $body = $request->all();
+        $rawBody = $request->getContent();
+        $requestBody = json_decode($rawBody, true);
+
         $header = $request->headers->all();
         $path = $request->path();
         $full_url = $request->fullUrl();
@@ -20,7 +22,7 @@ class ApiController extends Controller
             'host' => $domain,
             'full_url' => $full_url,
             'path' => $path,
-            'body' => $body,
+            'body' => $requestBody,
             'header' => $header,
             'logs' => [],
         ];
