@@ -12,6 +12,7 @@ class ApiController extends Controller
 
         $rawBody = $request->getContent();
         $requestBody = json_decode($rawBody, true);
+        $all = $request->all();
 
         $header = $request->headers->all();
         $path = $request->path();
@@ -22,8 +23,8 @@ class ApiController extends Controller
             'host' => $domain,
             'full_url' => $full_url,
             'path' => $path,
-            'body' => $requestBody,
-            'header' => $header,
+            'body' => $requestBody ?? $all,
+            'header' => $header ?? [],
             'logs' => [],
         ];
 
